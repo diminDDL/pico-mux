@@ -1,0 +1,30 @@
+.program mux
+
+.wrap_target
+    mov pins, pins ; Copy the value from the IN pin mappings to the OUT pin mappings (the values of these mappings can be used to MUX the signal)
+    ; mov pins, !NULL
+.wrap
+
+% c-sdk {
+static inline void mux_program_init(PIO pio, uint sm, uint offset, float clkdiv, uint pin_in, uint pin_out) {
+
+    pio_sm_config c = mux_program_get_default_config(offset);
+
+    // set the pin functions
+    sm_config_set_out_pins(&c, pin_out, 1);
+    sm_config_set_in_pins(&c, pin_in);
+    sm_config_set_in_pin_count(&c, 1);
+
+    // set state machine settings
+    sm_config_set_clkdiv(&c, clkdiv);
+
+    // initialise the pins
+    pio_gpio_init(pio, pin_in);
+    pio_gpio_init(pio, pin_out);
+
+    // set all the pins as outputs
+    pio_sm_set_pindirs_with_mask(pio, sm, (0u << pin_in) | (1u << pin_out), (1u << pin_in) | (1u << pin_out));  
+    
+    pio_sm_init(pio, sm, offset, &c);
+}
+%}
