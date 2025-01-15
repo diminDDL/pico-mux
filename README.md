@@ -15,6 +15,6 @@ To clarify, `(2, 6)` means that the signal on GPIO `2` will be read and output o
 
 You can also use the `controller.py` script to programmatically control the MUX.
 
-The parser quite robust input validation, but it may not handle all edge cases perfectly. Double-check your scripts before running them, especially if connected to sensitive hardware.
+The parser has quite robust input validation, but it may not handle all edge cases perfectly. Double-check your scripts before running them, especially if connected to sensitive hardware.
 
 If you need to adjust the voltage levels, you can power the Raspberry Pi Pico via the 3.3V pin with the 3V3_EN pin tied to ground. The official voltage range is 1.8V to 3.3V, but it can be pushed up to 4.5V or even 5V if you're willing to accept the risk of damaging the Pico over time. Or you can use a level shifter.
